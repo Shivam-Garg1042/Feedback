@@ -57,7 +57,7 @@ const SurveyForm = () => {
     
     try {
       // Connect to your backend API endpoint
-      const apiUrl = 'http://localhost:8080/api/survey/submit'; // Update with your actual API URL
+      const apiUrl = 'https://double-rigging-451512-r5.el.r.appspot.com/api/survey/submit'; // Update with your actual API URL
       
       // Send data to your backend API
       const response = await axios.post(apiUrl, formState);
