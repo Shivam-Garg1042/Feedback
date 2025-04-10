@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 import logo from '../assets/c_logo.png'; // Assuming you have a logo image
-// Rating emoji and text configurations - keeping original structure
+
+// Rating emoji and text configurations - keeping original structure from Code 1
 const ratingConfig = [
   { emoji: '😄', text: 'Excellent / उत्कृष्ट', value: 5 },
   { emoji: '🙂', text: 'Good / अच्छा', value: 4 },
@@ -11,7 +12,7 @@ const ratingConfig = [
 ];
 
 const SurveyForm = () => {
-  // Keeping the original state structure
+  // Using the state structure from Code 2 (working backend)
   const [formState, setFormState] = useState({
     question1: null,
     question2: null,
@@ -22,11 +23,11 @@ const SurveyForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
 
-  // Keeping the original handlers
+  // Using the handlers from Code 2 (working backend)
   const handleRatingChange = (name, value) => {
     setFormState(prevState => ({
       ...prevState,
-      [name]: value.toString() // Convert to string to match your mongoose model
+      [name]: value.toString() // Convert to string to match the mongoose model
     }));
   };
 
@@ -38,7 +39,7 @@ const SurveyForm = () => {
     }));
   };
 
-  // Keeping the original submit handler and backend logic
+  // Using the submit handler from Code 2 (working backend)
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -48,7 +49,7 @@ const SurveyForm = () => {
       return;
     }
 
-    // Check if phone is provided (required by your backend model)
+    // Check if phone is provided (required by backend model)
     if (!formState.phone) {
       alert('WhatsApp number is required.');
       return;
@@ -58,10 +59,10 @@ const SurveyForm = () => {
     setSubmitStatus(null);
     
     try {
-      // Connect to your backend API endpoint - keeping original URL
+      // Using the API URL from Code 2 (working backend)
       const apiUrl = 'https://double-rigging-451512-r5.el.r.appspot.com/api/survey/submit';
       
-      // Send data to your backend API - keeping original implementation
+      // Send data to backend API
       const response = await axios.post(apiUrl, formState);
       
       setSubmitStatus('success');
@@ -86,7 +87,7 @@ const SurveyForm = () => {
     }
   };
 
-  // Updated Rating Component - keeping original function signature and logic
+  // Rating Component from Code 1 (preferred frontend)
   const RatingSelector = ({ question, name, selectedValue, onRatingChange }) => (
     <div className="mb-2 bg-white p-2 rounded-lg shadow-md">
       {/* English question with Hindi translation below */}
@@ -139,7 +140,7 @@ const SurveyForm = () => {
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Maintaining the original field structure */}
+          {/* Phone field */}
           <div className="mb-2">
             <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
               WhatsApp Number / व्हाट्सएप नंबर *
@@ -156,7 +157,7 @@ const SurveyForm = () => {
             />
           </div>
 
-          {/* Using the original RatingSelector component with original question names */}
+          {/* Rating selectors */}
           <RatingSelector
             question="1. How was your product experience?"
             name="question1"
@@ -178,7 +179,7 @@ const SurveyForm = () => {
             onRatingChange={handleRatingChange}
           />
 
-          {/* Submit button with updated styling */}
+          {/* Submit button */}
           <button
             type="submit"
             disabled={isSubmitting}
@@ -190,7 +191,7 @@ const SurveyForm = () => {
             {isSubmitting ? 'Submitting...' : 'Submit Feedback / फीडबैक सबमिट करें'}
           </button>
           
-          {/* Keeping original success/error messaging structure */}
+          {/* Success/error messages */}
           {submitStatus === 'success' && (
             <p className="text-[#278c6a] text-center mt-4">Feedback submitted successfully!</p>
           )}
