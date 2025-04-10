@@ -1,33 +1,35 @@
 import { useState } from 'react';
 import axios from 'axios';
-import logo from '../assets/c_logo.png'; // Assuming you have a logo image
 
-// Rating emoji and text configurations - keeping original structure from Code 1
+// Rating emoji and text configurations
 const ratingConfig = [
-  { emoji: '😄', text: 'Excellent / उत्कृष्ट', value: 5 },
-  { emoji: '🙂', text: 'Good / अच्छा', value: 4 },
-  { emoji: '😐', text: 'Average / औसत', value: 3 },
-  { emoji: '🙁', text: 'Below Average / औसत से कम', value: 2 },
-  { emoji: '😞', text: 'Poor / खराब', value: 1 }
+  { emoji: '😄', text: 'Excellent', value: 5 },
+  { emoji: '🙂', text: 'Good', value: 4 },
+  { emoji: '😐', text: 'Average', value: 3 },
+  { emoji: '🙁', text: 'Below Average', value: 2 },
+  { emoji: '😞', text: 'Poor', value: 1 }
+  
+  
+  
+  
 ];
 
 const SurveyForm = () => {
-  // Using the state structure from Code 2 (working backend)
   const [formState, setFormState] = useState({
     question1: null,
     question2: null,
     question3: null,
+    // Match the backend model field names
     email: '',
     phone: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
 
-  // Using the handlers from Code 2 (working backend)
   const handleRatingChange = (name, value) => {
     setFormState(prevState => ({
       ...prevState,
-      [name]: value.toString() // Convert to string to match the mongoose model
+      [name]: value.toString() // Convert to string to match your mongoose model
     }));
   };
 
@@ -39,7 +41,6 @@ const SurveyForm = () => {
     }));
   };
 
-  // Using the submit handler from Code 2 (working backend)
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -49,7 +50,7 @@ const SurveyForm = () => {
       return;
     }
 
-    // Check if phone is provided (required by backend model)
+    // Check if phone is provided (required by your backend model)
     if (!formState.phone) {
       alert('WhatsApp number is required.');
       return;
@@ -59,10 +60,10 @@ const SurveyForm = () => {
     setSubmitStatus(null);
     
     try {
-      // Using the API URL from Code 2 (working backend)
-      const apiUrl = 'https://double-rigging-451512-r5.el.r.appspot.com/api/survey/submit';
+      // Connect to your backend API endpoint
+      const apiUrl = 'https://double-rigging-451512-r5.el.r.appspot.com/api/survey/submit'; // Update with your actual API URL
       
-      // Send data to backend API
+      // Send data to your backend API
       const response = await axios.post(apiUrl, formState);
       
       setSubmitStatus('success');
@@ -87,30 +88,22 @@ const SurveyForm = () => {
     }
   };
 
-  // Rating Component from Code 1 (preferred frontend)
+  // Reusable Rating Component
   const RatingSelector = ({ question, name, selectedValue, onRatingChange }) => (
     <div className="mb-2 bg-white p-2 rounded-lg shadow-md">
-      {/* English question with Hindi translation below */}
-      <p className="text-lg font-semibold text-[#003444] mb-1">{question}</p>
-      <p className="text-sm font-medium text-[#1e7295] mb-3">
-        {name === "question1" && "1. आपका उत्पाद अनुभव कैसा था?"}
-        {name === "question2" && "2. आपका सेवा अनुभव कैसा था?"}
-        {name === "question3" && "3. आपका EMI जमा अनुभव (नकद/UPI) कैसा था?"}
-      </p>
-      
-      {/* Mobile-responsive rating buttons */}
-      <div className="flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0 sm:space-x-2">
+      <p className="text-lg font-semibold text-gray-800 mb-4">{question}</p>
+      <div className="flex justify-between items-center space-x-2">
         {ratingConfig.map((rating) => (
           <button
             key={rating.value}
             type="button"
             onClick={() => onRatingChange(name, rating.value)}
-            className={`flex items-center justify-between sm:flex-col sm:justify-center w-full p-2 rounded-lg transition-all duration-300 
+            className={`flex flex-col items-center justify-center w-full p-2 rounded-lg transition-all duration-300 
               ${selectedValue === rating.value.toString() 
-                ? 'bg-[#003444] text-white scale-105' 
-                : 'bg-gray-100 text-gray-600 hover:bg-[#1e7295] hover:text-white'}`}
+                ? 'bg-blue-500 text-white scale-105' 
+                : 'bg-gray-100 text-gray-600 hover:bg-blue-100'}`}
           >
-            <span className="text-2xl sm:text-3xl sm:mb-1">{rating.emoji}</span>
+            <span className="text-3xl mb-1">{rating.emoji}</span>
             <span className="text-xs font-medium">{rating.text}</span>
           </button>
         ))}
@@ -119,45 +112,42 @@ const SurveyForm = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#e6f0f3] to-[#d0e6ed] flex items-center justify-center px-3 py-3 sm:px-4 sm:py-4">
-      <div className="bg-white shadow-2xl rounded-2xl p-4 w-full max-w-md">
-        
-        {/* Company logo */}
-        <div className="flex justify-center mb-4">
-          <img 
-            src={logo}
-            alt="Company Logo" 
-            className="h-16 sm:h-16 object-contain" 
-          />
-        </div>
-        
-        {/* Title with English and Hindi */}
-        <h2 className="text-2xl sm:text-3xl font-bold mb-1 text-center text-[#003444]">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center px-4 py-4">
+      <div className="bg-white shadow-2xl rounded-2xl p-4 w-full max-w-xl">
+        <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">
           Customer Experience Survey
         </h2>
-        <p className="text-lg sm:text-xl text-center text-[#1e7295] mb-6">
-          ग्राहक अनुभव सर्वेक्षण
-        </p>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Phone field */}
-          <div className="mb-2">
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-              WhatsApp Number / व्हाट्सएप नंबर *
-            </label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              value={formState.phone}
-              onChange={handleInputChange}
-              className="w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#003444]"
-              placeholder="Your WhatsApp number / आपका व्हाट्सएप नंबर"
-              required
-            />
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Customer identification fields - renamed to match backend model */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* <div className="mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email (Optional)</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formState.email}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Your email"
+              /> */}
+            {/* </div> */}
+            <div className="mb-2">
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">WhatsApp Number *</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                value={formState.phone}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Your WhatsApp number"
+                required
+              />
+            </div>
           </div>
 
-          {/* Rating selectors */}
           <RatingSelector
             question="1. How was your product experience?"
             name="question1"
@@ -179,21 +169,19 @@ const SurveyForm = () => {
             onRatingChange={handleRatingChange}
           />
 
-          {/* Submit button */}
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full text-white py-4 rounded-lg 
+            className={`w-full text-white py-3 rounded-lg 
               transition duration-300 ease-in-out transform hover:scale-[1.02] 
-              focus:outline-none focus:ring-2 focus:ring-[#003444] focus:ring-opacity-50
-              ${isSubmitting ? 'bg-[#1e7295] cursor-not-allowed' : 'bg-[#003444] hover:bg-[#278c6a]'}`}
+              focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50
+              ${isSubmitting ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'}`}
           >
-            {isSubmitting ? 'Submitting...' : 'Submit Feedback / फीडबैक सबमिट करें'}
+            {isSubmitting ? 'Submitting...' : 'Submit Feedback'}
           </button>
           
-          {/* Success/error messages */}
           {submitStatus === 'success' && (
-            <p className="text-[#278c6a] text-center mt-4">Feedback submitted successfully!</p>
+            <p className="text-green-500 text-center mt-4">Feedback submitted successfully!</p>
           )}
           
           {submitStatus === 'error' && (
