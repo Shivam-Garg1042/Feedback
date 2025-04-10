@@ -3,11 +3,15 @@ import axios from 'axios';
 
 // Rating emoji and text configurations
 const ratingConfig = [
-  { emoji: '😄', text: 'Excellent', value: 5 },
-  { emoji: '🙂', text: 'Good', value: 4 },
-  { emoji: '😐', text: 'Average', value: 3 },
+  
+  { emoji: '😞', text: 'Poor', value: 1 },
+  
   { emoji: '🙁', text: 'Below Average', value: 2 },
-  { emoji: '😞', text: 'Poor', value: 1 }
+ 
+  { emoji: '😐', text: 'Average', value: 3 },
+   
+  { emoji: '🙂', text: 'Good', value: 4 },
+  { emoji: '😄', text: 'Excellent', value: 5 }
   
   
   
@@ -121,7 +125,7 @@ const SurveyForm = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Customer identification fields - renamed to match backend model */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* <div className="mb-2">
+            <div className="mb-2">
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email (Optional)</label>
               <input
                 type="email"
@@ -132,7 +136,7 @@ const SurveyForm = () => {
                 className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Your email"
               /> */}
-            {/* </div> */}
+            {/* </div>
             <div className="mb-2">
               <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">WhatsApp Number *</label>
               <input
