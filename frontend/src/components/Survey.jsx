@@ -92,7 +92,7 @@ const SurveyForm = () => {
       {/* English question with Hindi translation below */}
       <p className="text-lg font-semibold text-[#003444] mb-1">{question}</p>
       <p className="text-lg font-medium text-[#1e7295] mb-3">
-        {name === "question1" && "1. चार्जअप द्वारा दिए गए Products(बैटरी, चार्जर आदि) का अपना अनुभव साझा करें?"}
+        {name === "question1" && "1. चार्जअप द्वारा दिए गए Products(बैटरी, चार्जर आदि) का अपना अनुभव share करें?"}
         {name === "question2" && "2. आपका Service अनुभव कैसा था?"}
         {name === "question3" && "3. आपका EMI जमा अनुभव (नकद/UPI) कैसा था?"}
       </p>
